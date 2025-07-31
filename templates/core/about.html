@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %} About Us {% endblock title %}
+
+
+{% block content %}
+
+  {% include 'base/preloader.html' %}
+
+  {% include 'base/navbar.html' with about_active=True %}
+
+  {% include 'base/page-heading.html' with page_name='about us' comment='more about us!' %}
+
+  {% include 'base/about-us.html' %}
+
+  {% include 'base/footer.html' %}
+
+{% endblock content %}
