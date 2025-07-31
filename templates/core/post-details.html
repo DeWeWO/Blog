@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %} Post Details {% endblock title %}
+
+
+{% block content %}
+
+  {% include 'base/preloader.html' %}
+
+  {% include 'base/navbar.html' with post_active=True %}
+
+  {% include 'base/page-heading.html' with page_name='Post Details' comment='Single blog post' %}
+
+  {% include 'base/post-detail.html' %}
+
+  {% include 'base/footer.html' %}
+
+{% endblock content %}
+ 

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %} Blog Entries {% endblock title %}
+
+
+{% block content %}
+
+  {% include 'base/preloader.html' %}
+
+  {% include 'base/navbar.html' with blog_active=True %}
+
+  {% include 'base/page-heading.html' with page_name='Recent Posts' comment='Our Recent Blog Entries' %}
+
+  {% include 'base/body.html' %}
+
+  {% include 'base/footer.html' %}
+
+{% endblock content %}

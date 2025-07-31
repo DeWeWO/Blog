@@ -18,13 +18,13 @@
                 <a class="nav-link" href="{% url 'about' %}">About Us</a>
             </li>
             <li class="nav-item {% if blog_active %}active{% endif %}">
-                <a class="nav-link" href="blog.html">Blog Entries</a>
+                <a class="nav-link" href="{% url 'blog_entries' %}">Blog Entries</a>
             </li>
             <li class="nav-item {% if post_active %}active{% endif %}">
-                <a class="nav-link" href="post-details.html">Post Details</a>
+                <a class="nav-link" href="{% url 'post_details' %}">Post Details</a>
             </li>
             <li class="nav-item {% if contact_active %}active{% endif %}">
-                <a class="nav-link" href="contact.html">Contact Us</a>
+                <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
             </li>
         </ul>
         </div>
