@@ -25,3 +25,4 @@ class UserAdmin(UserAdmin):
     )
     search_fields = ("username", "discipline", "user_group",)
     ordering = ("username", "discipline", "user_group",)
+
