@@ -17,7 +17,7 @@ class UsersManagersTests(TestCase):
         self.assertTrue(user.is_active)
         self.assertFalse(user.is_staff)
         self.assertFalse(user.is_superuser)
-        self.assertEqual(user.username, "dewew")  # Agar username mavjud bo‘lsa
+        self.assertEqual(user.username, "dewew")
 
         with self.assertRaises(TypeError):
             User.objects.create_user()
