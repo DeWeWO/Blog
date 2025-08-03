@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import LoginForm
 from django.views import View
 from .models import User
-from django.contrib.auth import login, login, authenticate, get_user_model
+from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 
 
@@ -21,6 +21,10 @@ class LoginView(View):
                 login(request, user)
                 return redirect("index")
             else:
-                form.add_error(None, "Username yoki email yoki parol noto‘g‘ri.")
-        return redirect("login")
+                print("User not found.!")
+        return redirect("index")
     
+class LogoutView(View):
+    def get(self, request):
+        logout(request=request)
+        return redirect("index")
