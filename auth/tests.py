@@ -10,6 +10,7 @@ class UsersManagersTests(TestCase):
             first_name="De",
             last_name="WeW",
             username="dewew",
+            email="dewew@gmail.com",
             discipline="AX",
             user_group=231,
             password="foo"
@@ -27,6 +28,7 @@ class UsersManagersTests(TestCase):
                 first_name="De",
                 last_name="WeW",
                 username="",
+                email="dewew@gmail.com",
                 discipline="AX",
                 user_group=231,
                 password="foo"
@@ -38,6 +40,7 @@ class UsersManagersTests(TestCase):
             first_name="De",
             last_name="WeW",
             username="dewew",
+            email="dewew@gmail.com",
             discipline="AX",
             user_group=231,
             password="foo"
@@ -52,6 +55,7 @@ class UsersManagersTests(TestCase):
                 first_name="De",
                 last_name="WeW",
                 username="dewew",
+                email="dewew@gmail.com",
                 discipline="AX",
                 user_group=231,
                 password="foo",

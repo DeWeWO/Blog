@@ -2,7 +2,9 @@ from django.contrib.auth.base_user import BaseUserManager
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, first_name, last_name, discipline, user_group, password, **extra_fields):
+    def create_user(self, email, username, first_name, last_name, discipline, user_group, password, **extra_fields):
+        if not email:
+            raise ValueError("Email kiritilishi kerak!")
         if not username:
             raise ValueError("Foydalanuvchi nomi kiritilishi kerak!")
         if not first_name:
@@ -15,6 +17,7 @@ class UserManager(BaseUserManager):
             raise ValueError("Guruh kiritilishi kerak!")
         
         user = self.model(
+            email=email,
             username=username,
             first_name=first_name,
             last_name=last_name,
@@ -26,7 +29,7 @@ class UserManager(BaseUserManager):
         user.save()
         return user
     
-    def create_superuser(self, username, first_name, last_name, discipline, user_group, password, **extra_fields):
+    def create_superuser(self, email, username, first_name, last_name, discipline, user_group, password, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("is_active", True)
@@ -37,6 +40,7 @@ class UserManager(BaseUserManager):
             raise ValueError("Superuser must have is_superuser=True.")
         
         return self.create_user(
+            email=email,
             username=username,
             first_name=first_name,
             last_name=last_name,
