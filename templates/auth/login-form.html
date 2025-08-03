@@ -11,17 +11,18 @@
             <!-- Form -->
             
             <div class="col-md-6 col-lg-5">
-                <form style="max-width: 400px; margin: auto;">
+                <form style="max-width: 400px; margin: auto;" method="post"  action="">
+                    {% csrf_token %}
                     <h2 class="mb-4 text-center">Login</h2>
 
                     <div class="mb-3">
-                    <label for="email" class="form-label">Email address</label>
-                    <input type="email" id="email" class="form-control" placeholder="Enter your email">
+                    <label for="email" class="form-label">Email / Username</label>
+                    <input name="username_or_email" id="email" class="form-control" placeholder="Enter your email">
                     </div>
 
                     <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" id="password" class="form-control" placeholder="Enter your password">
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password">
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center mb-3">

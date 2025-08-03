@@ -21,6 +21,12 @@ ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = "authentication.User"
 
+AUTHENTICATION_BACKENDS = [
+    'auth.backends.EmailOrUsernameBackend',  # siz yozgan backend
+    'django.contrib.auth.backends.ModelBackend',       # default backend (fallback)
+
+]
+
 
 # Application definition
 
