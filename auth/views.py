@@ -13,11 +13,11 @@ class RegisterView(View):
     def post(self, request):
         form = RegisterForm(data=request.POST)
         if form.is_valid():
-            form.save()
-            user = authenticate(request, username=form.cleaned_data['email'], password=form.cleaned_data['password1'])
-            if user is not None:
-                login(request, user)
-            return redirect("index")
+            user = form.save()
+            login_user = authenticate(request, username=user.username, password=form.cleaned_data['password1'])
+            if login_user is not None:
+                login(request, login_user)
+                return redirect("index")
         return render(request, "auth/register.html", {"form": form})
 
 

@@ -11,6 +11,7 @@
             <!-- Form -->
             
             <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                
                 <form style="max-width: 600px; margin: auto;" method="post">
                     {% csrf_token %}
                     <h2 class="mb-4 text-center">Sign up</h2>
@@ -37,72 +38,99 @@
                     <div data-mdb-input-init class="form-outline mb-4">
                         <input type="email" name="email" class="form-control" required>
                         <label class="form-label">Email</label>
-                        <div class="invalid-feedback">
-                            Please choose.
-                        </div>
                     </div>
 
-                    <div data-mdb-input-init class="form-outline mb-4">
-                        <input name="username" class="form-control" required>
-                        <label class="form-label">Foydalanuvchi nomi</label>
-                        <div class="invalid-feedback">
-                            Please choose.
-                        </div>
-                    </div>
+                    
 
+                    <!-- RO‘L TANLOVI -->
                     <div class="row">
+                        <!-- Foydalanuvchi nomi -->
                         <div class="col-md-6 mb-4">
-
                             <div data-mdb-input-init class="form-outline">
-                                <input type="text" name="discipline" class="form-control" required>
-                                <label class="form-label">Yo'nalish</label>
-                                <div class="invalid-feedback">
-                                    Please choose.
-                                </div>
+                                <input name="username" class="form-control" required>
+                                <label class="form-label">Foydalanuvchi nomi</label>
                             </div>
-
                         </div>
+
+                        <!-- Role tanlash -->
                         <div class="col-md-6 mb-4">
-
-                            <div data-mdb-input-init class="form-outline">
-                                <input type="text" name="user_group"class="form-control" required>
-                                <label class="form-label">Guruh</label>
-                                <div class="invalid-feedback">
-                                    Please choose.
-                                </div>
-                            </div>
-
+                            <select data-mdb-select-init name="role" id="role" class="form-select" required onchange="toggleFields()">
+                                <option value="student">Talaba</option>
+                                <option value="teacher">O'qituvchi</option>
+                            </select>
                         </div>
                     </div>
+
+
+                    <!-- Har doim bor bo‘lgan row -->
+                    <div class="row">
+                        <!-- Talaba uchun: Yo'nalish -->
+                        <div class="col-md-6 mb-4 student-field" style="display: none;">
+                            <div data-mdb-input-init class="form-outline">
+                                <input type="text" name="discipline" class="form-control">
+                                <label class="form-label">Yo'nalish</label>
+                            </div>
+                        </div>
+
+                        <!-- Talaba uchun: Guruh -->
+                        <div class="col-md-6 mb-4 student-field" style="display: none;">
+                            <div data-mdb-input-init class="form-outline">
+                                <input type="text" name="user_group" class="form-control">
+                                <label class="form-label">Guruh</label>
+                            </div>
+                        </div>
+
+                        <!-- O'qituvchi uchun: Kafedra -->
+                        <div class="col-md-12 mb-4 teacher-field" style="display: none;">
+                            <div data-mdb-input-init class="form-outline">
+                                <input type="text" name="department" class="form-control">
+                                <label class="form-label">Kafedra</label>
+                            </div>
+                        </div>
+                    </div>
+
+
 
                     <div data-mdb-input-init class="form-outline mb-4">
                         <input type="password" name="password1" class="form-control" required>
                         <label class="form-label">Parol</label>
-                        <div class="invalid-feedback">
-                            Please choose.
-                        </div>
                     </div>
 
                     <div data-mdb-input-init class="form-outline mb-4">
                         <input type="password" name="password2" class="form-control" required>
                         <label class="form-label">Parolni qayta kiriting</label>
-                        <div class="invalid-feedback">
-                            Please choose.
-                        </div>
                     </div>
-
-                    <!-- <div class="form-check d-flex mb-5">
-                        <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
-                        <label class="form-check-label" for="form2Example3">
-                            I agree all statements in <a href="#!">Terms of service</a>
-                        </label>
-                    </div> -->
-
+                    
                     <div class="d-grid mb-3">
                         <button type="submit" class="btn btn-primary btn-lg">Register</button>
                     </div>
                 </form>
+
+
             </div>
         </div>
     </div>
 </div>
+
+
+<script>
+    function toggleFields() {
+        const role = document.getElementById("role").value;
+        const studentFields = document.querySelectorAll(".student-field");
+        const teacherFields = document.querySelectorAll(".teacher-field");
+
+        if (role === "student") {
+            studentFields.forEach(el => el.style.display = "block");
+            teacherFields.forEach(el => el.style.display = "none");
+        } else if (role === "teacher") {
+            studentFields.forEach(el => el.style.display = "none");
+            teacherFields.forEach(el => el.style.display = "block");
+        } else {
+            // Agar hech narsa tanlanmagan bo‘lsa, hammasini yashir
+            studentFields.forEach(el => el.style.display = "none");
+            teacherFields.forEach(el => el.style.display = "none");
+        }
+    }
+
+    window.onload = toggleFields;
+</script>
