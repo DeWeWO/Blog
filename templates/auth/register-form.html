@@ -1,0 +1,90 @@
+<div class="content-wrapper bg-white">
+    <div class="container login-section">
+        <div class="row align-items-center justify-content-center">
+            
+            <!-- Image -->
+            <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                class="img-fluid" alt="Login illustration">
+            </div>
+
+            <!-- Form -->
+            
+            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                <form style="max-width: 600px; margin: auto;" method="post"  action="">
+                    {% csrf_token %}
+                    <h2 class="mb-4 text-center">Sign up</h2>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+
+                            <div data-mdb-input-init class="form-outline">
+                                <input type="text" name="first_name" class="form-control">
+                                <label class="form-label">Ism</label>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6 mb-4">
+
+                            <div data-mdb-input-init class="form-outline">
+                                <input type="text" name="last_name"class="form-control">
+                                <label class="form-label">Familiya</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="email" name="username_or_email" class="form-control">
+                        <label class="form-label">Email</label>
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input name="username_or_email"" class="form-control">
+                        <label class="form-label">Foydalanuvchi nomi</label>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+
+                            <div data-mdb-input-init class="form-outline">
+                                <input type="text" name="discipline" class="form-control">
+                                <label class="form-label">Yo'nalish</label>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6 mb-4">
+
+                            <div data-mdb-input-init class="form-outline">
+                                <input type="text" name="user_group"class="form-control">
+                                <label class="form-label">Guruh</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="password" name="password1" class="form-control">
+                        <label class="form-label">Parol</label>
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="password" name="password1" class="form-control">
+                        <label class="form-label">Parolni qayta kiriting</label>
+                    </div>
+
+                    <div class="form-check d-flex mb-5">
+                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
+                    <label class="form-check-label" for="form2Example3">
+                      I agree all statements in <a href="#!">Terms of service</a>
+                    </label>
+                  </div>
+
+                    <div class="d-grid mb-3">
+                        <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

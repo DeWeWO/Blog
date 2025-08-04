@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}UrDU Blog{% endblock title %}
+
+{% block content %}
+
+	{% include 'auth/register-form-css.html' %}
+
+	<div class="page-wrapper">
+
+		{% include 'base/navbar.html' with home_active=True %}
+
+		{% include 'auth/register-form.html' %}
+
+		{% include 'base/footer.html' %}
+
+	</div>
+
+{% endblock content %}

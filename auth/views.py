@@ -1,9 +1,14 @@
 from django.shortcuts import render, redirect
-from .forms import LoginForm
+from .forms import LoginForm, RegisterForm
 from django.views import View
 from .models import User
 from django.contrib.auth import login, logout, authenticate, get_user_model
-from django.contrib.auth.forms import AuthenticationForm
+
+
+class RegisterView(View):
+    def get(self, request):
+        form = RegisterForm()
+        return render(request, "auth/register.html", {"form": form})
 
 
 class LoginView(View):
