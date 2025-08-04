@@ -11,7 +11,7 @@
             <!-- Form -->
             
             <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                <form style="max-width: 600px; margin: auto;" method="post"  action="">
+                <form style="max-width: 600px; margin: auto;" method="post">
                     {% csrf_token %}
                     <h2 class="mb-4 text-center">Sign up</h2>
 
@@ -19,7 +19,7 @@
                         <div class="col-md-6 mb-4">
 
                             <div data-mdb-input-init class="form-outline">
-                                <input type="text" name="first_name" class="form-control">
+                                <input type="text" name="first_name" class="form-control" required>
                                 <label class="form-label">Ism</label>
                             </div>
 
@@ -27,7 +27,7 @@
                         <div class="col-md-6 mb-4">
 
                             <div data-mdb-input-init class="form-outline">
-                                <input type="text" name="last_name"class="form-control">
+                                <input type="text" name="last_name" class="form-control" required>
                                 <label class="form-label">Familiya</label>
                             </div>
 
@@ -35,50 +35,68 @@
                     </div>
 
                     <div data-mdb-input-init class="form-outline mb-4">
-                        <input type="email" name="username_or_email" class="form-control">
+                        <input type="email" name="email" class="form-control" required>
                         <label class="form-label">Email</label>
+                        <div class="invalid-feedback">
+                            Please choose.
+                        </div>
                     </div>
 
                     <div data-mdb-input-init class="form-outline mb-4">
-                        <input name="username_or_email"" class="form-control">
+                        <input name="username" class="form-control" required>
                         <label class="form-label">Foydalanuvchi nomi</label>
+                        <div class="invalid-feedback">
+                            Please choose.
+                        </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-4">
 
                             <div data-mdb-input-init class="form-outline">
-                                <input type="text" name="discipline" class="form-control">
+                                <input type="text" name="discipline" class="form-control" required>
                                 <label class="form-label">Yo'nalish</label>
+                                <div class="invalid-feedback">
+                                    Please choose.
+                                </div>
                             </div>
 
                         </div>
                         <div class="col-md-6 mb-4">
 
                             <div data-mdb-input-init class="form-outline">
-                                <input type="text" name="user_group"class="form-control">
+                                <input type="text" name="user_group"class="form-control" required>
                                 <label class="form-label">Guruh</label>
+                                <div class="invalid-feedback">
+                                    Please choose.
+                                </div>
                             </div>
 
                         </div>
                     </div>
 
                     <div data-mdb-input-init class="form-outline mb-4">
-                        <input type="password" name="password1" class="form-control">
+                        <input type="password" name="password1" class="form-control" required>
                         <label class="form-label">Parol</label>
+                        <div class="invalid-feedback">
+                            Please choose.
+                        </div>
                     </div>
 
                     <div data-mdb-input-init class="form-outline mb-4">
-                        <input type="password" name="password1" class="form-control">
+                        <input type="password" name="password2" class="form-control" required>
                         <label class="form-label">Parolni qayta kiriting</label>
+                        <div class="invalid-feedback">
+                            Please choose.
+                        </div>
                     </div>
 
-                    <div class="form-check d-flex mb-5">
-                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
-                    <label class="form-check-label" for="form2Example3">
-                      I agree all statements in <a href="#!">Terms of service</a>
-                    </label>
-                  </div>
+                    <!-- <div class="form-check d-flex mb-5">
+                        <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
+                        <label class="form-check-label" for="form2Example3">
+                            I agree all statements in <a href="#!">Terms of service</a>
+                        </label>
+                    </div> -->
 
                     <div class="d-grid mb-3">
                         <button type="submit" class="btn btn-primary btn-lg">Register</button>

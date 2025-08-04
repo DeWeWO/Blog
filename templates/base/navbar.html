@@ -34,10 +34,10 @@
                 <a class="nav-link" href="{% url 'logout' %}">Sign Out</a>
             </li>
             {% else %}
-            <li class="nav-item">
+            <li class="nav-item {% if signin_active %}active{% endif %}">
                 <a class="nav-link" href="{% url 'login' %}">Sign In</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if signup_active %}active{% endif %}">
                 <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
             </li>
             {% endif %}

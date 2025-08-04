@@ -9,6 +9,16 @@ class RegisterView(View):
     def get(self, request):
         form = RegisterForm()
         return render(request, "auth/register.html", {"form": form})
+    
+    def post(self, request):
+        form = RegisterForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            user = authenticate(request, username=form.cleaned_data['email'], password=form.cleaned_data['password1'])
+            if user is not None:
+                login(request, user)
+            return redirect("index")
+        return render(request, "auth/register.html", {"form": form})
 
 
 class LoginView(View):
@@ -21,7 +31,14 @@ class LoginView(View):
         if form.is_valid():
             username_or_email = form.cleaned_data["username_or_email"]
             password = form.cleaned_data["password"]
-            user = authenticate(request, username=username_or_email, password=password)
+            # Avval email orqali user topishga harakat qilamiz
+            try:
+                user_obj = User.objects.get(email=username_or_email)
+                username = user_obj.username  # foydalanuvchining username ni olamiz
+            except User.DoesNotExist:
+                username = username_or_email  # agar email topilmasa, bu username deb qaraymiz
+            # Auth qilish
+            user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
                 return redirect("index")
