@@ -1,3 +1,4 @@
+{% load socialaccount %}
 <div class="content-wrapper bg-white">
     <div class="container login-section">
         <div class="row align-items-center justify-content-center">
@@ -104,6 +105,13 @@
                     <div class="d-grid mb-3">
                         <button type="submit" class="btn btn-primary btn-lg">Register</button>
                     </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <a href="{% provider_login_url 'google' %}" class="field google">
+                            <span>SignUp with Google</span>
+                        </a>
+                    </div>
+
                 </form>
 
 
