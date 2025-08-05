@@ -21,13 +21,6 @@ ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = "authentication.User"
 
-AUTHENTICATION_BACKENDS = [
-    'auth.backends.EmailOrUsernameBackend',  # siz yozgan backend
-    'django.contrib.auth.backends.ModelBackend',       # default backend (fallback)
-
-]
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,6 +33,13 @@ INSTALLED_APPS = [
     # My_apps
     'core.apps.CoreConfig',
     'auth.apps.AuthConfig',
+    
+    #add the following
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',   #for google auth
 ]
 
 MIDDLEWARE = [
@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -132,3 +133,30 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTHENTICATION_BACKENDS = [
+    'auth.backends.EmailOrUsernameBackend',  # siz yozgan backend
+    'django.contrib.auth.backends.ModelBackend',       # default backend (fallback)
+
+    #used for social authentications
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = '/'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': env.str('CLIENT_ID'),
+            'scret': env.str('SECRET'),
+            'key': ''
+        }
+    }
+}
+
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'index'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'login'
