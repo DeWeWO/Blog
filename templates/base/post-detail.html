@@ -7,12 +7,14 @@
             <div class="row">
             <div class="col-lg-12">
                 <div class="blog-post">
+                {% for post in post.images.all %}
                 <div class="blog-thumb">
-                    <img src="{% static 'assets/images/blog-post-02.jpg' %}" alt="">
+                    <img src="{{ post.image.url }}" alt="">
                 </div>
+                {% endfor %}
                 <div class="down-content">
-                    <span>Lifestyle</span>
-                    <a href="post-details.html"><h4>Aenean pulvinar gravida sem nec</h4></a>
+                    <span>{{ post.category }}</span>
+                    <a href="post-details.html"><h4>{{ post.title }}</h4></a>
                     <ul class="post-info">
                     <li><a href="#">Admin</a></li>
                     <li><a href="#">May 12, 2020</a></li>

@@ -1,22 +1,24 @@
 from django.shortcuts import render
+from .models import Post
 import requests
 from environs import Env
 
 env = Env()
 env.read_env()
 
+def blog_entries(request):
+    posts = Post.objects.all()
+    return render(request, 'core/blog.html', {"posts": posts})
+
+def post_details(request, post_slug):
+    post = Post.objects.get(slug=post_slug)
+    return render(request, 'core/post-details.html', {"post": post})
 
 def index(request):
     return render(request, 'core/index.html')
 
 def about(request):
     return render(request, 'core/about.html')
-
-def blog_entries(request):
-    return render(request, 'core/blog.html')
-
-def post_details(request):
-    return render(request, 'core/post-details.html')
 
 def contact(request):
     BOT_TOKEN = env.str('BOT_TOKEN')

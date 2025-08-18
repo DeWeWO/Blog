@@ -2,7 +2,41 @@
 <div class="col-lg-8">
     <div class="all-blog-posts">
         <div class="row">
+
+        {% for post in posts %}
         <div class="col-lg-6">
+            <div class="blog-post">
+            <div class="blog-thumb">
+                {% if post.images.first %}
+                <img src="{{ post.images.first.image.url }}" alt="">
+                {% endif %}
+            </div>
+            <div class="down-content">
+                <span>{{ post.category }}</span>
+                <a href="{% url 'post_details' post.slug %}"><h4>{{ post.title }}</h4></a>
+                <ul class="post-info">
+                <li><a href="#">{{ post.author }}</a></li>
+                <li><a href="#">May 31, 2020</a></li>
+                <li><a href="#">12 Comments</a></li>
+                </ul>
+                <p>{{ post.description }}</p>
+                <div class="post-options">
+                <div class="row">
+                    <div class="col-lg-12">
+                    <ul class="post-tags">
+                        <li><i class="fa fa-tags"></i></li>
+                        <li><a href="#">Best Templates</a>,</li>
+                        <li><a href="#">TemplateMo</a></li>
+                    </ul>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+        
+        <!-- <div class="col-lg-6">
             <div class="blog-post">
             <div class="blog-thumb">
                 <img src="{% static 'assets/images/blog-thumb-01.jpg' %}" alt="">
@@ -169,7 +203,7 @@
                 </div>
             </div>
             </div>
-        </div>
+        </div> -->
         <div class="col-lg-12">
             <ul class="page-numbers">
             <li><a href="#">1</a></li>
