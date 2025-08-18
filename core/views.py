@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Post
 from .forms import PostForm
 import requests
@@ -9,6 +9,12 @@ env.read_env()
 
 def create_post(request):
     form = PostForm()
+    if request.method == "POST":
+        form = PostForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            product = form.save()
+            print(product)
+            return redirect("blog_entries")
     return render(request, "core/create_post.html", {"form": form})
 
 def blog_entries(request):
