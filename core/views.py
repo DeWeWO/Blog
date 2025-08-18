@@ -1,10 +1,15 @@
 from django.shortcuts import render
 from .models import Post
+from .forms import PostForm
 import requests
 from environs import Env
 
 env = Env()
 env.read_env()
+
+def create_post(request):
+    form = PostForm()
+    return render(request, "core/create_post.html", {"form": form})
 
 def blog_entries(request):
     posts = Post.objects.all()
