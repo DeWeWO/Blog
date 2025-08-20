@@ -12,13 +12,27 @@
 
   {% include 'base/page-heading.html' with page_name='Create Post' comment='Create Your Posts' %}
 
+  <style>
+    .btn-custom {
+      background-color: #f48840;
+      color: #fff;
+      transition: background-color 0.3s ease;
+    }
+    .btn-custom:hover {
+      background-color: #ff7315;
+      color: #fff;
+    }
+  </style>
+
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-8">
         <form action="" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           {{ form|crispy }}
-          <button type="submit" class="btn btn-primary">Create Post</button>
+          <div class="text-end mt-3">
+            <button type="submit" class="btn btn-custom">Create Post</button>
+          </div>
         </form>
       </div>
     </div>
