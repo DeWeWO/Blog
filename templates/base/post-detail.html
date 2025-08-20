@@ -49,6 +49,13 @@
                             <li><a href="#"> Twitter</a></li>
                         </ul>
                         </div>
+                        <div class="d-flex justify-content-end">
+                        <ul class="post-share d-flex gap-4 list-unstyled mb-0">
+                            <li></li>
+                            <li><a href=""><i class="fa-solid fa-pencil"></i></a></li>
+                            <li><a href=""><i class="fa-solid fa-circle-minus"></i></a></li>
+                        </ul>
+                        </div>
                     </div>
                     </div>
                 </div>
@@ -163,6 +170,23 @@
         user-select: none;
         -webkit-user-select: none;
     }
+
+    .post-share li a i {
+        color: #aaa; 
+        font-size: 18px;
+        transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .post-share li:nth-child(2) a:hover i {
+        color: #1fc268;   /* yashil */
+        transform: scale(1.2);
+    }
+
+    .post-share li:nth-child(3) a:hover i {
+        color: #b91d2d;
+        transform: scale(1.2);
+    }
+
 </style>
 
 <script>
