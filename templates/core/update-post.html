@@ -17,13 +17,10 @@
     <div class="row justify-content-center">
         <div class="col-8">
             
-            
-            <!-- Form -->
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% crispy form %}
                 
-                <!-- Mavjud rasmlarni ko'rsatish -->
                 {% if images %}
                 <div class="mb-4">
                     <div class="existing-images-title">Mavjud rasmlar:</div>
@@ -40,7 +37,6 @@
                 <!-- O'chirilgan rasmlar uchun hidden input -->
                 <input type="hidden" name="deleted_images" value="">
 
-                
             </form>
         </div>
     </div>
