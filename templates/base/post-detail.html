@@ -8,9 +8,21 @@
             <div class="col-lg-12">
                 <div class="blog-post">
                     <div class="blog-thumb">
-                    {% for image in post.images.all %}
-                        <img src="{{ image.image.url }}" class="d-block w-100" alt="...">
-                    {% endfor %}
+                        <div id="postCarousel{{ post.id }}" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                {% for image in post.images.all %}
+                                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                        <img src="{{ image.image.url }}" class="d-block w-100 carousel-img" alt="Image {{ forloop.counter }}">
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#postCarousel{{ post.id }}" data-bs-slide="prev">
+                                <i class="fa-solid fa-circle-chevron-left fa-2x text-white"></i>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#postCarousel{{ post.id }}" data-bs-slide="next">
+                                <i class="fa-solid fa-circle-chevron-right fa-2x text-white"></i>
+                            </button>
+                        </div>
                     </div>
                 <div class="down-content">
                     <span>{{ post.category }}</span>
@@ -134,3 +146,154 @@
     </div>
     </div>
 </section>
+
+
+<style>
+    .carousel {
+        cursor: ew-resize;
+        user-select: none;
+        -webkit-user-drag: none;
+    }
+
+    .carousel.grabbing {
+        cursor: ew-resize;
+    }
+
+    .carousel-img {
+        user-select: none;
+        -webkit-user-select: none;
+    }
+</style>
+
+<script>
+class UniversalSwipeCarousel {
+    constructor(carouselElement, options = {}) {
+        this.carousel = carouselElement;
+        this.carouselInstance = new bootstrap.Carousel(this.carousel, {
+            interval: false,
+            wrap: true,
+            ...options
+        });
+        
+        this.threshold = options.threshold || 30;
+        this.restraint = options.restraint || 100;
+        this.allowedTime = options.allowedTime || 500;
+        
+        this.startX = 0; this.startY = 0; this.distX = 0; this.distY = 0;
+        this.startTime = 0; this.isDragging = false;
+        
+        this.init();
+    }
+    
+    init() {
+        // Mouse events
+        this.carousel.addEventListener('mousedown', (e) => this.handleStart(e, 'mouse'));
+        this.carousel.addEventListener('mousemove', (e) => this.handleMove(e, 'mouse'));
+        this.carousel.addEventListener('mouseup', (e) => this.handleEnd(e, 'mouse'));
+        this.carousel.addEventListener('mouseleave', (e) => this.handleEnd(e, 'mouse'));
+        
+        // Touch events
+        this.carousel.addEventListener('touchstart', (e) => this.handleStart(e, 'touch'), { passive: true });
+        this.carousel.addEventListener('touchmove', (e) => this.handleMove(e, 'touch'), { passive: true });
+        this.carousel.addEventListener('touchend', (e) => this.handleEnd(e, 'touch'), { passive: true });
+        
+        // Pointer events (universal)
+        if ('PointerEvent' in window) {
+            this.carousel.addEventListener('pointerdown', (e) => this.handleStart(e, 'pointer'));
+            this.carousel.addEventListener('pointermove', (e) => this.handleMove(e, 'pointer'));
+            this.carousel.addEventListener('pointerup', (e) => this.handleEnd(e, 'pointer'));
+            this.carousel.addEventListener('pointercancel', (e) => this.handleEnd(e, 'pointer'));
+        }
+        
+        // Drag va select oldini olish
+        this.carousel.addEventListener('selectstart', (e) => e.preventDefault());
+        this.carousel.addEventListener('dragstart', (e) => e.preventDefault());
+        this.carousel.addEventListener('contextmenu', (e) => {
+            if (this.isDragging) e.preventDefault();
+        });
+        
+        // Keyboard
+        this.carousel.addEventListener('keydown', (e) => this.handleKeyboard(e));
+        this.carousel.setAttribute('tabindex', '0');
+    }
+    
+    getEventCoords(e, type) {
+        switch(type) {
+            case 'mouse': return { x: e.clientX, y: e.clientY };
+            case 'touch': return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            case 'pointer': return { x: e.clientX, y: e.clientY };
+            default: return { x: 0, y: 0 };
+        }
+    }
+    
+    handleStart(e, type) {
+        if (type === 'mouse' && e.button !== 0) return;
+        if (type === 'pointer' && !e.isPrimary) return;
+        
+        const coords = this.getEventCoords(e, type);
+        this.startX = coords.x;
+        this.startY = coords.y;
+        this.startTime = new Date().getTime();
+        this.isDragging = true;
+        
+        this.carousel.classList.add('grabbing');
+        
+        if (type === 'mouse') e.preventDefault();
+    }
+    
+    handleMove(e, type) {
+        if (!this.isDragging) return;
+        
+        const coords = this.getEventCoords(e, type);
+        this.distX = coords.x - this.startX;
+        this.distY = coords.y - this.startY;
+        
+        if (type === 'mouse') e.preventDefault();
+    }
+    
+    handleEnd(e, type) {
+        if (!this.isDragging) return;
+        
+        this.isDragging = false;
+        this.carousel.classList.remove('grabbing');
+        
+        const elapsedTime = new Date().getTime() - this.startTime;
+        
+        if (elapsedTime <= this.allowedTime) {
+            if (Math.abs(this.distX) >= this.threshold && Math.abs(this.distY) <= this.restraint) {
+                if (this.distX < 0) {
+                    this.carouselInstance.next(); // Chapga swipe
+                } else {
+                    this.carouselInstance.prev(); // O'ngga swipe
+                }
+            }
+        }
+        
+        this.startX = 0; this.startY = 0; this.distX = 0; this.distY = 0;
+    }
+    
+    handleKeyboard(e) {
+        switch(e.key) {
+            case 'ArrowLeft':
+                e.preventDefault();
+                this.carouselInstance.prev();
+                break;
+            case 'ArrowRight':
+                e.preventDefault();
+                this.carouselInstance.next();
+                break;
+        }
+    }
+}
+
+// Barcha carousellar uchun avtomatik ishga tushirish
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.carousel').forEach(carousel => {
+        new UniversalSwipeCarousel(carousel, {
+            threshold: 30,      // Min swipe masofasi
+            restraint: 100,     // Max vertikal harakat  
+            allowedTime: 500    // Max swipe vaqti
+        });
+    });
+});
+</script>
