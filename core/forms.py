@@ -86,3 +86,13 @@ class PostForm(forms.ModelForm):
             Submit('submit', 'Postni Yuklash', css_class='btn btn-custom'),
             HTML('</div>')
         )
+
+class PostUpdateForm(PostForm):
+    images = MultipleFileField(
+        label='Post uchun rasm(lar)', 
+        required=False,
+        widget=MultipleFileInput(attrs={
+            'class': 'form-control image-input',
+            'id': 'id_images'
+        })
+    )

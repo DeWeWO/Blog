@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post, PostImage
-from .forms import PostForm
+from .forms import PostForm, PostUpdateForm
 import requests
 from environs import Env
 
@@ -32,7 +32,7 @@ def post_update(request, post_slug):
     images = PostImage.objects.filter(post=post)
     
     if request.method == "POST":
-        form = PostForm(instance=post, data=request.POST, files=request.FILES)
+        form = PostUpdateForm(instance=post, data=request.POST, files=request.FILES)
         if form.is_valid():
             post = form.save()
             
@@ -47,7 +47,7 @@ def post_update(request, post_slug):
                 
             return redirect("blog_entries")
     else:
-        form = PostForm(instance=post)
+        form = PostUpdateForm(instance=post)
     
     return render(request, 'core/update-post.html', {
         'form': form, 
