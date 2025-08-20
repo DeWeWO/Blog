@@ -7,11 +7,11 @@
             <div class="row">
             <div class="col-lg-12">
                 <div class="blog-post">
-                {% for post in post.images.all %}
-                <div class="blog-thumb">
-                    <img src="{{ post.image.url }}" alt="">
-                </div>
-                {% endfor %}
+                    <div class="blog-thumb">
+                    {% for image in post.images.all %}
+                        <img src="{{ image.image.url }}" class="d-block w-100" alt="...">
+                    {% endfor %}
+                    </div>
                 <div class="down-content">
                     <span>{{ post.category }}</span>
                     <h4>{{ post.title }}</h4>

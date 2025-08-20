@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Post
+from .models import Post, PostImage
 from .forms import PostForm
 import requests
 from environs import Env
@@ -12,8 +12,10 @@ def create_post(request):
     if request.method == "POST":
         form = PostForm(data=request.POST, files=request.FILES)
         if form.is_valid():
-            product = form.save()
-            print(product)
+            post = form.save()
+            images = form.cleaned_data.get("images")
+            for image in images:
+                PostImage.objects.create(post=post, image=image)
             return redirect("blog_entries")
     return render(request, "core/create_post.html", {"form": form})
 
