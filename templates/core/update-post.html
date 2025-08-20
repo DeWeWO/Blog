@@ -1,44 +1,54 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block title %} Postni yangilash {% endblock title %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'assets/css/update_image_preview.css' %}">
+{% endblock %}
 
 {% block content %}
+{% include 'base/preloader.html' %}
+{% include 'base/navbar.html' with blog_active=True %}
+{% include 'base/page-heading.html' with page_name='Postni tahrirlash' comment='Postdagi kamchiliklarni tuzatish' %}
 
-  {% include 'base/preloader.html' %}
-
-  {% include 'base/navbar.html' with blog_active=True %}
-
-  {% include 'base/page-heading.html' with page_name='Postni tahrirlash' comment='Postdagi kamchiliklarni tuztish' %}
-
-  <style>
-    .btn-custom {
-      background-color: #f48840;
-      color: #fff;
-      transition: background-color 0.3s ease;
-    }
-    .btn-custom:hover {
-      background-color: #ff7315;
-      color: #fff;
-    }
-  </style>
-
-  <div class="container mt-5">
+<div class="container mt-5">
     <div class="row justify-content-center">
-      <div class="col-8">
-        <form action="" method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          {{ form|crispy }}
-          <div class="text-end mt-3">
-            <button type="submit" class="btn btn-custom">Postni Yangilash</button>
-          </div>
-        </form>
-      </div>
+        <div class="col-8">
+            
+            
+            <!-- Form -->
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% crispy form %}
+                
+                <!-- Mavjud rasmlarni ko'rsatish -->
+                {% if images %}
+                <div class="mb-4">
+                    <div class="existing-images-title">Mavjud rasmlar:</div>
+                    <div id="existing-images-container" class="existing-images-container">
+                        {% for image in images %}
+                        <div class="existing-image" id="existing-image-{{ image.id }}">
+                            <img src="{{ image.image.url }}" alt="Mavjud rasm">
+                            <button type="button" class="remove-existing-image" data-image-id="{{ image.id }}">×</button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                <!-- O'chirilgan rasmlar uchun hidden input -->
+                <input type="hidden" name="deleted_images" value="">
+
+                
+            </form>
+        </div>
     </div>
-  </div>
+</div>
 
-  {% include 'base/footer.html' %}
-
+{% include 'base/footer.html' %}
 {% endblock content %}
 
+{% block extra_js %}
+<script src="{% static 'assets/js/update_image_preview.js' %}"></script>
+{% endblock %}

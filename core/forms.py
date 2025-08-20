@@ -83,6 +83,6 @@ class PostForm(forms.ModelForm):
             Field("author"),
             Field("images"),
             HTML('<div class="d-flex justify-content-end mt-3">'),
-            Submit('submit', 'Post Yaratish', css_class='btn btn-custom'),
+            Submit('submit', 'Postni Yuklash', css_class='btn btn-custom'),
             HTML('</div>')
         )

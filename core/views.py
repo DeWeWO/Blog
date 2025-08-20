@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post, PostImage
 from .forms import PostForm
 import requests
@@ -28,14 +28,32 @@ def post_details(request, post_slug):
     return render(request, 'core/post-details.html', {"post": post})
 
 def post_update(request, post_slug):
-    post = Post.objects.get(slug=post_slug)
-    form = PostForm(instance=post)
+    post = get_object_or_404(Post, slug=post_slug)  # get() o'rniga get_object_or_404()
+    images = PostImage.objects.filter(post=post)
+    
     if request.method == "POST":
         form = PostForm(instance=post, data=request.POST, files=request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('blog_entries')
-    return render(request, 'core/update-post.html', {'form': form})
+            post = form.save()
+            
+            new_images = form.cleaned_data.get("images")
+            if new_images:
+                for image in new_images:
+                    PostImage.objects.create(post=post, image=image)
+            
+            deleted_images = request.POST.getlist('deleted_images')
+            if deleted_images:
+                PostImage.objects.filter(id__in=deleted_images).delete()
+                
+            return redirect("blog_entries")
+    else:
+        form = PostForm(instance=post)
+    
+    return render(request, 'core/update-post.html', {
+        'form': form, 
+        'images': images,
+        'post': post
+    })
 
 def post_delete(request, post_slug):
     post = Post.objects.get(slug=post_slug)
