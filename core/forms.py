@@ -1,7 +1,8 @@
+# forms.py
 from django import forms
 from .models import Post
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, Field
+from crispy_forms.layout import Layout, Submit, Field, HTML
 from django.forms import ModelChoiceField
 
 class MultipleFileInput(forms.ClearableFileInput):
@@ -19,7 +20,14 @@ class MultipleFileField(forms.FileField):
         return single_file_clean(data, initial)
 
 class PostForm(forms.ModelForm):
-    images = MultipleFileField(label='Post uchun rasm(lar)', required=True)
+    images = MultipleFileField(
+        label='Post uchun rasm(lar)', 
+        required=True,
+        widget=MultipleFileInput(attrs={
+            'class': 'form-control image-input',
+            'id': 'id_images'
+        })
+    )
 
     class Meta:
         model = Post
@@ -32,11 +40,13 @@ class PostForm(forms.ModelForm):
         }
         widgets = {
             "title": forms.TextInput(attrs={
-                "placeholder": "Sarlavha kiriting"
+                "placeholder": "Sarlavha kiriting",
+                "class": "form-control"
             }),
             "description": forms.Textarea(attrs={
                 "placeholder": "To'liq tavsifni yozing",
-                "rows": 4
+                "rows": 4,
+                "class": "form-control"
             }),
         }
 
@@ -55,19 +65,24 @@ class PostForm(forms.ModelForm):
         })
         
         self.fields["category"].widget.attrs.update({
-            "title": "Post qaysi sohaga tegishli"
+            "title": "Post qaysi sohaga tegishli",
+            "class": "form-control"
         })
 
-        self.fields["images"].widget.attrs.update({
-            "title": "Rasm(lar)ni yuklang"
+        self.fields["author"].widget.attrs.update({
+            "class": "form-control"
         })
 
         self.helper = FormHelper()
         self.helper.form_method = "post"
+        self.helper.form_enctype = "multipart/form-data"
         self.helper.layout = Layout(
             Field("title"),
             Field("description"),
             Field("category"),
             Field("author"),
-            Field("images")
+            Field("images"),
+            HTML('<div class="d-flex justify-content-end mt-3">'),
+            Submit('submit', 'Post Yaratish', css_class='btn btn-custom'),
+            HTML('</div>')
         )

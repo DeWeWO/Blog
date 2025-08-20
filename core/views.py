@@ -27,6 +27,16 @@ def post_details(request, post_slug):
     post = Post.objects.get(slug=post_slug)
     return render(request, 'core/post-details.html', {"post": post})
 
+def post_update(request, post_slug):
+    post = Post.objects.get(slug=post_slug)
+    form = PostForm(instance=post)
+    if request.method == "POST":
+        form = PostForm(instance=post, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('blog_entries')
+    return render(request, 'core/update-post.html', {'form': form})
+
 def post_delete(request, post_slug):
     post = Post.objects.get(slug=post_slug)
     post.delete()

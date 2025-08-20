@@ -1,44 +1,29 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 
-{% block title %} Create Post {% endblock title %}
+{% block title %}Post Yaratish{% endblock title %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'assets/css/image_preview.css' %}">
+{% endblock %}
 
 {% block content %}
+{% include 'base/preloader.html' %}
+{% include 'base/navbar.html' with blog_active=True %}
+{% include 'base/page-heading.html' with page_name='Post Yaratish' comment='Postingiz orqali fikringizni bildiring!' %}
 
-  {% include 'base/preloader.html' %}
-
-  {% include 'base/navbar.html' with blog_active=True %}
-
-  {% include 'base/page-heading.html' with page_name='Create Post' comment='Create Your Posts' %}
-
-  <style>
-    .btn-custom {
-      background-color: #f48840;
-      color: #fff;
-      transition: background-color 0.3s ease;
-    }
-    .btn-custom:hover {
-      background-color: #ff7315;
-      color: #fff;
-    }
-  </style>
-
-  <div class="container mt-5">
+<div class="container mt-5">
     <div class="row justify-content-center">
-      <div class="col-8">
-        <form action="" method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          {{ form|crispy }}
-          <div class="text-end mt-3">
-            <button type="submit" class="btn btn-custom">Create Post</button>
-          </div>
-        </form>
-      </div>
+        <div class="col-8">
+            {% crispy form %}
+        </div>
     </div>
-  </div>
+</div>
 
-  {% include 'base/footer.html' %}
-
+{% include 'base/footer.html' %}
 {% endblock content %}
 
+{% block extra_js %}
+<script src="{% static 'assets/js/image_preview.js' %}"></script>
+{% endblock %}

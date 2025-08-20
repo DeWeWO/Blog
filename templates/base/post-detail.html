@@ -52,7 +52,7 @@
                         <div class="d-flex justify-content-end">
                         <ul class="post-share d-flex gap-4 list-unstyled mb-0">
                             <li></li>
-                            <li><a href=""><i class="fa-solid fa-pencil"></i></a></li>
+                            <li><a href="{% url 'post_update' post.slug %}"><i class="fa-solid fa-pencil"></i></a></li>
                             <li><a href="{% url 'post_delete' post.slug %}"><i class="fa-solid fa-circle-minus"></i></a></li>
                         </ul>
                         </div>
