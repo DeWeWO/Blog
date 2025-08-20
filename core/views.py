@@ -27,6 +27,11 @@ def post_details(request, post_slug):
     post = Post.objects.get(slug=post_slug)
     return render(request, 'core/post-details.html', {"post": post})
 
+def post_delete(request, post_slug):
+    post = Post.objects.get(slug=post_slug)
+    post.delete()
+    return redirect("blog_entries")
+
 def index(request):
     return render(request, 'core/index.html')
 
